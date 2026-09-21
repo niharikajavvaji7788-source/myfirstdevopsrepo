@@ -1,6 +1,7 @@
-# Use the official Nginx image
 FROM nginx:alpine
-# Copy your website files into Nginx's web directory
-COPY . /usr/share/nginx/html
-# Document that the container listens on port 80
+
+RUN rm -rf /usr/share/nginx/html/*
+
+COPY src/main/myapp.html /usr/share/nginx/html/index.html
+
 EXPOSE 80

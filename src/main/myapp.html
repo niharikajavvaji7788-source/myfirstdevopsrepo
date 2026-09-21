@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Ordering App</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+
+        header {
+            background-color: #ff5722;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 80%;
+            margin: 30px auto;
+        }
+
+        .menu {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .food-card {
+            background-color: white;
+            padding: 20px;
+            width: 250px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .food-card h3 {
+            margin-top: 0;
+        }
+
+        .price {
+            font-weight: bold;
+            color: #ff5722;
+        }
+
+        button {
+            background-color: #ff5722;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #e64a19;
+        }
+
+        .cart {
+            background-color: white;
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .checkout {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Foodie Express</h1>
+    <p>Order your favorite food online</p>
+</header>
+
+<div class="container">
+
+    <h2>Menu</h2>
+
+    <div class="menu">
+
+        <div class="food-card">
+            <h3>🍕 Margherita Pizza</h3>
+            <p>Tomato sauce, mozzarella and basil</p>
+            <p class="price">$12.99</p>
+            <button onclick="addToCart('Margherita Pizza', 12.99)">
+                Add to Cart
+            </button>
+        </div>
+
+        <div class="food-card">
+            <h3>🍔 Cheeseburger</h3>
+            <p>Beef patty, cheese, lettuce and tomato</p>
+            <p class="price">$9.99</p>
+            <button onclick="addToCart('Cheeseburger', 9.99)">
+                Add to Cart
+            </button>
+        </div>
+
+        <div class="food-card">
+            <h3>🍝 Pasta Alfredo</h3>
+            <p>Creamy Alfredo sauce with parmesan</p>
+            <p class="price">$11.99</p>
+            <button onclick="addToCart('Pasta Alfredo', 11.99)">
+                Add to Cart
+            </button>
+        </div>
+
+        <div class="food-card">
+            <h3>🥗 Caesar Salad</h3>
+            <p>Fresh lettuce, parmesan and Caesar dressing</p>
+            <p class="price">$7.99</p>
+            <button onclick="addToCart('Caesar Salad', 7.99)">
+                Add to Cart
+            </button>
+        </div>
+
+    </div>
+
+
+    <div class="cart">
+
+        <h2>Your Cart</h2>
+
+        <div id="cartItems">
+            <p>Your cart is empty.</p>
+        </div>
+
+        <h3>
+            Total: $<span id="total">0.00</span>
+        </h3>
+
+        <button class="checkout" onclick="placeOrder()">
+            Place Order
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    let cart = [];
+    let total = 0;
+
+    function addToCart(name, price) {
+
+        cart.push({
+            name: name,
+            price: price
+        });
+
+        total += price;
+
+        displayCart();
+    }
+
+
+    function displayCart() {
+
+        const cartDiv = document.getElementById("cartItems");
+
+        cartDiv.innerHTML = "";
+
+        cart.forEach(function(item) {
+
+            const itemDiv = document.createElement("div");
+
+            itemDiv.className = "cart-item";
+
+            itemDiv.innerHTML =
+                "<span>" + item.name + "</span>" +
+                "<span>$" + item.price.toFixed(2) + "</span>";
+
+            cartDiv.appendChild(itemDiv);
+        });
+
+        document.getElementById("total").innerText =
+            total.toFixed(2);
+    }
+
+
+    function placeOrder() {
+
+        if (cart.length === 0) {
+            alert("Please add some food to your cart.");
+            return;
+        }
+
+        alert(
+            "Order placed successfully!\nTotal: $" +
+            total.toFixed(2)
+        );
+
+        cart = [];
+        total = 0;
+
+        displayCart();
+
+        document.getElementById("cartItems").innerHTML =
+            "<p>Your cart is empty.</p>";
+    }
+
+</script>
+
+</body>
+</html>
